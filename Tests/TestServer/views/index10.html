@@ -1,0 +1,74 @@
+<link rel="manifest" href="/manifest.json">
+<script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+<script>
+  let date1 = null
+  let date2 = null
+  let token = null
+  var config = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
+  };
+  firebase.initializeApp(config);
+  firebase.messaging().onMessage(function (payload) {
+    console.log('Message received. ', payload);
+    date2 = new Date()
+    let diffrance = Math.abs(date1.getTime()-date2.getTime())/1000
+    console.log(diffrance)
+    firebase.database().ref("Timers/10").push({
+      time:diffrance,
+      token:token,
+      start:date1.toString(),
+      end:date2.toString()
+    })
+    // write timer here // 
+  });
+  class client {
+    constructor(IMEI, notificationToken) {
+      this.IMEI = IMEI
+      this.register()
+    }
+    register() {
+      let msg = firebase.messaging()
+      msg.IMEI = this.IMEI
+      msg.requestPermission().then(function () {
+        console.log('Notification permission granted.');
+        msg.getToken().then(function (currentToken) {
+          token = currentToken
+          firebase.database().ref("newclients/" + msg.IMEI).set({
+            IMEI: msg.IMEI,
+            notificationToken: currentToken
+          }).then(function(){
+              date1 = new Date()
+          })
+        })
+
+      }).catch(function (err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+    }
+    listen() {
+     
+    }
+  }
+
+
+  var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  var ID_LENGTH = 20;
+
+  var generate = function () {
+    var rtn = '';
+    for (var i = 0; i < ID_LENGTH; i++) {
+      rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
+    }
+    return rtn;
+  }
+
+  c = new client(generate())
+
+  // i should make a class
+</script>

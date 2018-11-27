@@ -1,0 +1,1 @@
+This is a TestClient that is used to time clients for registeration and connecting

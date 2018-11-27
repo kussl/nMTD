@@ -1,0 +1,3 @@
+certificate = ""
+databaseURL = ''
+FCMApiKey = ""

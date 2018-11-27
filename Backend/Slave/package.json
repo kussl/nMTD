@@ -1,0 +1,22 @@
+{
+  "name": "slave",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.197.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "^4.15.5",
+    "firebase-admin": "^5.8.2",
+    "morgan": "~1.9.0",
+    "net": "^1.0.2",
+    "node-ec2-metadata": "0.0.5",
+    "public-ip": "^2.4.0",
+    "random-id": "0.0.2",
+    "serve-favicon": "~2.4.5"
+  }
+}
